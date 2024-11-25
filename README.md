@@ -61,7 +61,7 @@ Note: You can get the apk in the apk folder directory.
 1. Install dependencies
 
    ```bash
-   npm install
+   npm install or npm install --legacy-peer-deps
    ```
 
 2. Start the app
