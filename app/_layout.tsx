@@ -1,39 +1,62 @@
-import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
-import { useFonts } from 'expo-font';
-import { Stack } from 'expo-router';
-import * as SplashScreen from 'expo-splash-screen';
-import { StatusBar } from 'expo-status-bar';
-import { useEffect } from 'react';
-import 'react-native-reanimated';
+import { useEffect } from "react";
+import { useFonts } from "expo-font";
+import { SplashScreen, Stack } from "expo-router";
+import { StatusBar } from "expo-status-bar";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
-import { useColorScheme } from '@/hooks/useColorScheme';
-
-// Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
 
-export default function RootLayout() {
-  const colorScheme = useColorScheme();
-  const [loaded] = useFonts({
-    SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
+export const client = new QueryClient();
+
+const InitialLayout = () => {
+  const [fontsLoaded, error] = useFonts({
+    "Nunito-Black": require("../assets/fonts/Nunito-Black.ttf"),
+    "Nunito-Bold": require("../assets/fonts/Nunito-Bold.ttf"),
+    "Nunito-ExtraBold": require("../assets/fonts/Nunito-ExtraBold.ttf"),
+    "Nunito-ExtraLight": require("../assets/fonts/Nunito-ExtraLight.ttf"),
+    "Nunito-Light": require("../assets/fonts/Nunito-Light.ttf"),
+    "Nunito-Regular": require("../assets/fonts/Nunito-Regular.ttf"),
+    Nunito: require("../assets/fonts/Nunito-Regular.ttf"),
+    "Nunito-SemiBold": require("../assets/fonts/Nunito-SemiBold.ttf"),
   });
 
   useEffect(() => {
-    if (loaded) {
+    if (error) throw error;
+
+    if (fontsLoaded) {
       SplashScreen.hideAsync();
     }
-  }, [loaded]);
+  }, [fontsLoaded, error]);
 
-  if (!loaded) {
+  if (!fontsLoaded) {
+    return null;
+  }
+
+  if (!fontsLoaded && !error) {
     return null;
   }
 
   return (
-    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="+not-found" />
-      </Stack>
-      <StatusBar style="auto" />
-    </ThemeProvider>
+    <>
+      <Stack
+        screenOptions={{
+          headerShown: false,
+          contentStyle: {
+            backgroundColor: "#fff",
+          },
+        }}
+      />
+      <StatusBar backgroundColor="#fff" style="dark" />
+    </>
   );
-}
+};
+
+const RootLayout = () => {
+  return (
+    <QueryClientProvider client={client}>
+      <InitialLayout />
+    </QueryClientProvider>
+  );
+};
+
+export default RootLayout;

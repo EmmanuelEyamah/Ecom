@@ -1,60 +1,39 @@
-import { Text, type TextProps, StyleSheet } from 'react-native';
+import React from "react";
+import { Text, TextProps, StyleProp, TextStyle } from "react-native";
+import { fs } from "@/utils/config";
+import { getColor } from "@/utils/theme";
 
-import { useThemeColor } from '@/hooks/useThemeColor';
-
-export type ThemedTextProps = TextProps & {
-  lightColor?: string;
-  darkColor?: string;
-  type?: 'default' | 'title' | 'defaultSemiBold' | 'subtitle' | 'link';
-};
-
-export function ThemedText({
-  style,
-  lightColor,
-  darkColor,
-  type = 'default',
-  ...rest
-}: ThemedTextProps) {
-  const color = useThemeColor({ light: lightColor, dark: darkColor }, 'text');
-
-  return (
-    <Text
-      style={[
-        { color },
-        type === 'default' ? styles.default : undefined,
-        type === 'title' ? styles.title : undefined,
-        type === 'defaultSemiBold' ? styles.defaultSemiBold : undefined,
-        type === 'subtitle' ? styles.subtitle : undefined,
-        type === 'link' ? styles.link : undefined,
-        style,
-      ]}
-      {...rest}
-    />
-  );
+interface ThemedTextProps extends TextProps {
+  link?: boolean;
+  fontSize?: number;
+  fontWeight?: TextStyle["fontWeight"];
 }
 
-const styles = StyleSheet.create({
-  default: {
-    fontSize: 16,
-    lineHeight: 24,
-  },
-  defaultSemiBold: {
-    fontSize: 16,
-    lineHeight: 24,
-    fontWeight: '600',
-  },
-  title: {
-    fontSize: 32,
-    fontWeight: 'bold',
-    lineHeight: 32,
-  },
-  subtitle: {
-    fontSize: 20,
-    fontWeight: 'bold',
-  },
-  link: {
-    lineHeight: 30,
-    fontSize: 16,
-    color: '#0a7ea4',
-  },
-});
+const ThemedText: React.FC<ThemedTextProps> = ({
+  style,
+  link,
+  children,
+  fontSize = 18,
+  fontWeight,
+  ...props
+}) => {
+  const nativeStyle: StyleProp<TextStyle> = { fontSize: fs(fontSize), fontWeight: fontWeight, fontFamily: "Nunito" }
+  const {primary, text} = getColor()
+  nativeStyle.color = text
+  if(link) {
+    nativeStyle.color = primary
+    nativeStyle.textDecorationColor = primary 
+    nativeStyle.textDecorationLine = "underline"
+    nativeStyle.cursor = "pointer"
+  }
+  return (
+    <Text
+      style={[nativeStyle, style]}
+      {...props}
+    >
+      {children}
+    </Text>
+  );
+};
+
+export default ThemedText;

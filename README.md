@@ -1,8 +1,62 @@
-# Welcome to your Expo app 👋
+# Product Search Catalog - Mobile App
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+## Project Overview
 
-## Get started
+This is a mobile application developed for showcasing a product search catalog with advanced search and categorization features. The app is built using Expo and React Native, integrating with the Fake Store API to provide a comprehensive product browsing experience.
+
+Note: You can get the apk in the apk folder directory.
+
+## Project Highlights
+
+- 🚀 Developed using Expo Go and React Native
+- 🛍️ Product search across multiple categories
+- 🔍 Advanced search functionality
+- 💾 Persistent search history
+
+## Tech Stack
+
+- **Framework**: Expo (React Native)
+- **API**: Fake Store API (https://fakestoreapi.com/)
+- **Design**: Figma Design Reference
+
+## Key Features
+
+1. **Dynamic Category Mapping**
+
+   - Map API categories to custom UI categories
+   - Flexible product and category representation
+
+2. **Search Functionality**
+
+   - Real-time product and category search
+   - Comprehensive result display
+   - Persistent search history
+
+3. **UI/UX**
+   - Responsive design
+   - Intuitive navigation
+   - Smooth transitions and animations
+
+## Screenshots
+
+<div style="display: flex; justify-content: space-between;">
+  <img src="screenshots/img1.png" width="250">
+  <img src="screenshots/img2.png" width="250">
+  <img src="screenshots/img3.png" width="250">
+  <img src="screenshots/img4.png" width="250">
+  <img src="screenshots/img5.png" width="250">
+  <img src="screenshots/img6.png" width="250">
+  <img src="screenshots/img7.png" width="250">
+  <img src="screenshots/img8.png" width="250">
+</div>
+
+## Getting Started
+
+### Prerequisites
+
+- Node.js (v16+)
+- npm or Yarn
+- Expo CLI
 
 1. Install dependencies
 
